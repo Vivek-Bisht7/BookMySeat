@@ -61,10 +61,11 @@ const Navbar = () => {
             alt="profile"
             className="rounded-full h-8 w-8 cursor-pointer"
             onClick={() => setOpen((prev) => !prev)}
+            referrerPolicy="no-referrer"
           />
 
           {open && (
-            <div className="absolute right-0 mt-2 w-40 bg-neutral-800 border border-neutral-700 rounded-md shadow-lg">
+            <div className="absolute right-0 mt-2 w-40 bg-neutral-800 border border-neutral-700 rounded-md shadow-lg z-10">
               <button
                 className="block w-full text-left px-4 py-2 text-sm text-neutral-200 hover:bg-neutral-700"
                 onClick={() => {
