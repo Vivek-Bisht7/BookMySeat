@@ -1,0 +1,68 @@
+const movies = [
+  {
+    id: 1,
+    title: "Interstellar",
+    poster: "/assets/interstellar.jpg",
+    rating: 8.6,
+    language: "English",
+    genre: "Sci-Fi",
+  },
+  {
+    id: 2,
+    title: "Animal",
+    poster: "/assets/animal.jpg",
+    rating: 7.9,
+    language: "Hindi",
+    genre: "Action",
+  },
+  {
+    id: 3,
+    title: "Spider-Man: No Way Home",
+    poster: "/assets/spiderman.jpg",
+    rating: 8.5,
+    language: "English",
+    genre: "Adventure",
+  },
+  {
+    id: 4,
+    title: "Avengers: Endgame",
+    poster: "/assets/endgame.jpg",
+    rating: 8.4,
+    language: "English",
+    genre: "Superhero",
+  },
+  {
+    id: 5,
+    title: "Oppenheimer",
+    poster: "/assets/oppenheimer.jpg",
+    rating: 8.7,
+    language: "English",
+    genre: "Drama",
+  },
+  {
+    id: 6,
+    title: "KGF Chapter 2",
+    poster: "/assets/kgf2.jpg",
+    rating: 8.2,
+    language: "Hindi",
+    genre: "Action",
+  },
+  {
+    id: 7,
+    title: "Jawan",
+    poster: "/assets/jawan.jpg",
+    rating: 7.5,
+    language: "Hindi",
+    genre: "Thriller",
+  },
+  {
+    id: 8,
+    title: "Inception",
+    poster: "/assets/inception.jpg",
+    rating: 8.8,
+    language: "English",
+    genre: "Sci-Fi",
+  },
+];
+
+export default movies;

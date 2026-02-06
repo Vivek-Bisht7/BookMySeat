@@ -59,7 +59,7 @@ const Navbar = () => {
           <img
             src={user.photoURL}
             alt="profile"
-            className="rounded-full h-8 w-8 cursor-pointer"
+            className="rounded-full h-8 w-8 cursor-pointer border border-white"
             onClick={() => setOpen((prev) => !prev)}
             referrerPolicy="no-referrer"
           />
