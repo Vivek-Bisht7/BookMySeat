@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar"
 import HeroCarousel from "../components/HeroCarousel";
 import NowShowing from "../components/NowShowing";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const { user, loading } = useContext(AuthContext);
@@ -18,6 +19,7 @@ const Home = () => {
       <div className="flex flex-1 flex-col">
         <HeroCarousel/> 
         <NowShowing/>
+        <Footer/>
       </div>
     </div>
   );

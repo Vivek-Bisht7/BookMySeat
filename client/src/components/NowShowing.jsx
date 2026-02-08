@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 
 const NowShowing = () => {
   return (
-    <div className="mt-8 px-6 mb-4">
+    <div className="mt-8 px-6 mb-4 select-none">
       <h2 className="text-3xl text-white font-bold mb-6"> 
         Now Showing 🎬
       </h2>
