@@ -6,6 +6,7 @@ const movies = [
     rating: 8.6,
     language: "English",
     genre: "Sci-Fi",
+    trailerCode:"HYVxnPmb15E",
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const movies = [
     rating: 7.9,
     language: "Hindi",
     genre: "Action",
+    trailerCode:"8FkLRUJj-o0",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const movies = [
     rating: 8.5,
     language: "English",
     genre: "Adventure",
+    trailerCode:"JfVOs4VSpmA",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const movies = [
     rating: 8.4,
     language: "English",
     genre: "Superhero",
+    trailerCode:"LPhqL4DqzBg",
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ const movies = [
     rating: 8.7,
     language: "English",
     genre: "Drama",
+    trailerCode:"uYPbbksJxIg",
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ const movies = [
     rating: 8.2,
     language: "Hindi",
     genre: "Action",
+    trailerCode:"Qah9sSIXJqk",
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ const movies = [
     rating: 7.5,
     language: "Hindi",
     genre: "Thriller",
+    trailerCode:"smP4vBPNuYQ",
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ const movies = [
     rating: 8.8,
     language: "English",
     genre: "Sci-Fi",
+    trailerCode:"LifqWf0BAOA",
   },
 ];
 

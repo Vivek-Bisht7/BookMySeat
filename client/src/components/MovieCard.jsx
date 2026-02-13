@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const MovieCard = ({movie}) => {
     return (
         <div className="rounded-2xl bg-zinc-900 overflow-hidden transform transition duration-500 hover:scale-105 select-none">
@@ -18,9 +20,9 @@ const MovieCard = ({movie}) => {
                     ⭐ {movie.rating} • {movie.language} • {movie.genre}
                 </p>
 
-                <button className="bg-red-600 text-white w-full rounded-xl py-2 font-semibold hover:bg-red-700">
+                <Link className="bg-red-600 text-white w-full rounded-xl py-2 font-semibold hover:bg-red-700 flex justify-center" to={`movie/${movie.id}`}>
                     Book Now
-                </button>
+                </Link>
             </div>
         </div>
     );
