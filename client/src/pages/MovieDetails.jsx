@@ -9,13 +9,24 @@ const MovieDetails = () => {
   // Find the selected movie using route param
   const movie = movies.find((m) => m.id === Number(id));
 
+  if (!movie) {
+      return (
+        <div className="min-h-screen text-white p-6 flex flex-col justify-center items-center text-4xl gap-5">
+          Movie not found 
+          <Link to="/" className="text-green-400 ">
+            Go Back Home
+          </Link>
+        </div>
+      );
+    }
+
   // Scroll to top when page loads
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white px-4 py-6">
+    <div className="min-h-screen bg-zinc-950 text-white px-4 py-6 select-none">
       
       {/* ===================== Header ===================== */}
       <div className="bg-zinc-900 p-4 rounded-2xl flex justify-between items-center mb-6 shadow-lg">

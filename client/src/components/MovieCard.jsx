@@ -21,7 +21,7 @@ const MovieCard = ({movie}) => {
                 </p>
 
                 <Link className="bg-red-600 text-white w-full rounded-xl py-2 font-semibold hover:bg-red-700 flex justify-center" to={`movie/${movie.id}`}>
-                    Book Now
+                    View Details
                 </Link>
             </div>
         </div>
