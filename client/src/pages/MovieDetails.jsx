@@ -10,27 +10,21 @@ const MovieDetails = () => {
   const movie = movies.find((m) => m.id === Number(id));
 
   if (!movie) {
-      return (
-        <div className="min-h-screen text-white p-6 flex flex-col justify-center items-center text-4xl gap-5">
-          Movie not found 
-          <Link to="/" className="text-green-400 ">
-            Go Back Home
-          </Link>
-        </div>
-      );
-    }
+    return (
+      <div className="min-h-screen text-white p-6 flex flex-col justify-center items-center text-4xl gap-5">
+        Movie not found
+        <Link to="/" className="text-green-400 ">
+          Go Back Home
+        </Link>
+      </div>
+    );
+  }
 
-  // Scroll to top when page loads
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+ 
   return (
     <div className="min-h-screen bg-zinc-950 text-white px-4 py-6 select-none">
-      
       {/* ===================== Header ===================== */}
       <div className="bg-zinc-900 p-4 rounded-2xl flex justify-between items-center mb-6 shadow-lg">
-        
         {/* Movie Title + Info */}
         <div>
           <h1 className="font-bold text-3xl">{movie.title}</h1>
@@ -49,18 +43,16 @@ const MovieDetails = () => {
             Back
           </Link>
 
-          <Link
-            to={`/movie/${movie.id}/seats`}
-            className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-xl font-bold transition"
-          >
-            Book Now
-          </Link>
+         <Link 
+          to={`/movie/${id}/Theatres`}
+          className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-xl font-bold transition">
+            Book Tickets
+         </Link>
         </div>
       </div>
 
       {/* ===================== Main Section ===================== */}
       <div className="flex">
-        
         {/* -------- Trailer -------- */}
         <iframe
           width="700"
@@ -72,7 +64,6 @@ const MovieDetails = () => {
 
         {/* -------- Movie Info -------- */}
         <div className="flex-1 p-4">
-          
           {/* Description */}
           <p className="text-zinc-400 leading-relaxed">
             Experience the magic of{" "}

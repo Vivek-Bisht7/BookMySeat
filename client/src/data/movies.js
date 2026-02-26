@@ -6,7 +6,9 @@ const movies = [
     rating: 8.6,
     language: "English",
     genre: "Sci-Fi",
-    trailerCode:"HYVxnPmb15E",
+    duration: "2h 49m",
+    trailerCode: "HYVxnPmb15E",
+    showtimes: ["10:00 AM", "2:00 PM", "6:00 PM", "10:00 PM"],
   },
   {
     id: 2,
@@ -15,7 +17,9 @@ const movies = [
     rating: 7.9,
     language: "Hindi",
     genre: "Action",
-    trailerCode:"8FkLRUJj-o0",
+    duration: "3h 21m",
+    trailerCode: "8FkLRUJj-o0",
+    showtimes: ["9:30 AM", "1:00 PM", "5:30 PM", "9:30 PM"],
   },
   {
     id: 3,
@@ -24,7 +28,9 @@ const movies = [
     rating: 8.5,
     language: "English",
     genre: "Adventure",
-    trailerCode:"JfVOs4VSpmA",
+    duration: "2h 28m",
+    trailerCode: "JfVOs4VSpmA",
+    showtimes: ["11:00 AM", "3:00 PM", "7:00 PM", "11:00 PM"],
   },
   {
     id: 4,
@@ -33,7 +39,9 @@ const movies = [
     rating: 8.4,
     language: "English",
     genre: "Superhero",
-    trailerCode:"LPhqL4DqzBg",
+    duration: "3h 1m",
+    trailerCode: "LPhqL4DqzBg",
+    showtimes: ["10:30 AM", "2:30 PM", "6:30 PM", "10:30 PM"],
   },
   {
     id: 5,
@@ -42,7 +50,9 @@ const movies = [
     rating: 8.7,
     language: "English",
     genre: "Drama",
-    trailerCode:"uYPbbksJxIg",
+    duration: "3h 0m",
+    trailerCode: "uYPbbksJxIg",
+    showtimes: ["9:45 AM", "1:45 PM", "5:45 PM", "9:45 PM"],
   },
   {
     id: 6,
@@ -51,7 +61,9 @@ const movies = [
     rating: 8.2,
     language: "Hindi",
     genre: "Action",
-    trailerCode:"Qah9sSIXJqk",
+    duration: "2h 48m",
+    trailerCode: "Qah9sSIXJqk",
+    showtimes: ["10:15 AM", "2:15 PM", "6:15 PM", "10:15 PM"],
   },
   {
     id: 7,
@@ -60,7 +72,9 @@ const movies = [
     rating: 7.5,
     language: "Hindi",
     genre: "Thriller",
-    trailerCode:"smP4vBPNuYQ",
+    duration: "2h 49m",
+    trailerCode: "smP4vBPNuYQ",
+    showtimes: ["9:00 AM", "12:30 PM", "4:30 PM", "8:30 PM"],
   },
   {
     id: 8,
@@ -69,7 +83,9 @@ const movies = [
     rating: 8.8,
     language: "English",
     genre: "Sci-Fi",
-    trailerCode:"LifqWf0BAOA",
+    duration: "2h 28m",
+    trailerCode: "LifqWf0BAOA",
+    showtimes: ["11:15 AM", "3:15 PM", "7:15 PM", "11:15 PM"],
   },
 ];
 

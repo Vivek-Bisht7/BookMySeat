@@ -40,7 +40,7 @@ const Navbar = () => {
         onSubmit={handleSearch}
         className="flex-1 flex justify-center"
       >
-        <div className="flex items-center gap-2 bg-neutral-800 border border-neutral-700 rounded-md px-3 py-1 w-full max-w-md">
+        <div className="flex items-center gap-2 bg-neutral-900 border border-neutral-700 rounded-md px-3 py-1 w-full max-w-md">
           <IoSearch className="text-neutral-400" />
           <input
             type="text"

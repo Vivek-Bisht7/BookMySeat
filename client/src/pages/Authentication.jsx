@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Navbar from "../components/Navbar";
 import { FaGoogle } from "react-icons/fa";
 import { signInWithGoogle } from "../services/authService"
 import {useNavigate} from 'react-router-dom'
@@ -20,7 +19,6 @@ const Authentication = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
 
       <div className="flex flex-1 items-center justify-center">
         <button

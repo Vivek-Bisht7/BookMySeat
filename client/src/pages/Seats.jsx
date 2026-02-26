@@ -187,14 +187,16 @@ const Seats = ({
           </p>
         </div>
 
-        {/* Confirm Button */}
-        <button
-          className="w-full max-w-62.5 py-3 rounded-xl 
-    bg-green-500 text-gray-900 font-bold text-lg 
-    hover:bg-green-400 active:scale-95 transition-all duration-200"
-        >
-          Confirm Booking
-        </button>
+        {/* Pay Button */}
+        {totalPrice > 0 && (
+          <button
+            className="w-full max-w-62.5 py-3 rounded-xl 
+          bg-green-500 text-gray-900 font-bold text-lg 
+          hover:bg-green-400 active:scale-95 transition-all duration-200 cursor-pointer"
+          >
+            Pay ₹{totalPrice}
+          </button>
+        )}
       </div>
     </div>
   );
