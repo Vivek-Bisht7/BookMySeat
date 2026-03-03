@@ -12,7 +12,7 @@ const Home = () => {
   if (!user) return <Navigate to="/login" />;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <div className="flex flex-1 flex-col">
         <HeroCarousel/> 
         <NowShowing/>

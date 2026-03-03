@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const MovieCard = ({movie}) => {
     return (
-        <Link to={`movie/${movie.id}`}>
+        <Link to={`movie/${movie._id}`}>
         <div className="rounded-2xl bg-zinc-900 overflow-hidden transform transition duration-500 hover:scale-105 select-none">
 
             <img 

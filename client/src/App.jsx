@@ -8,11 +8,10 @@ import Seats from "./pages/Seats";
 import Navbar from "../src/components/Navbar";
 import Footer from "../src/components/Footer";
 import Theatre from "./pages/Theatre";
+import Admin from "./pages/Admin";
+import { LocationProvider } from "./contexts/LocationContext";
 
 const App = () => {
-
-  const isAdminRoute = useLocation().pathname.startsWith('/admin');
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [useLocation().pathname]);
@@ -20,15 +19,18 @@ const App = () => {
   return (
     <div className="min-h-screen w-full bg-neutral-950">
       <AuthProvider>
-        {!isAdminRoute && <Navbar/>}
-        <Routes>
-          <Route path="/login" element={<Authentication />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<MovieDetails/>} />
-          <Route path="/movie/:id/Theatres" element={<Theatre/>} />
-          <Route path="/movie/:id/seats" element={<Seats/>} />
-        </Routes>
-        {!isAdminRoute && <Footer/>}
+        <LocationProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/login" element={<Authentication />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/movie/:id/Theatres" element={<Theatre />} />
+            <Route path="/seats/:id" element={<Seats />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+          <Footer />
+        </LocationProvider>
       </AuthProvider>
     </div>
   );
