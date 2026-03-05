@@ -165,7 +165,7 @@ const Navbar = () => {
       )}
 
       {/* Location */}
-      {localStorage.getItem("userCity") && (
+      {localStorage.getItem("userCity") && !isLoginPage && (
           <div className="flex items-center gap-2 text-white px-4">
               <MapPin className="text-red-500" />
               <span>{localStorage.getItem("userCity")}</span>
