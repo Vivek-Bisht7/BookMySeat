@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate , Navigate} from "react-router-dom";
 import api from "../services/api";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -16,6 +16,7 @@ const Seats = () => {
   const { user} = useContext(AuthContext);
 
 
+
   const fetchShow = async () => {
     try {
       const res = await api.get(`/show/getShow/${id}`);
@@ -23,17 +24,16 @@ const Seats = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }; 
 
   const fetchSeatStatus = async () => {
     try {
-      if(!user) return;
       const res = await api.get(`/booking/show/${id}/seats`);
       setSeatStatus(res.data);
     } catch (err) {
       console.error(err);
     } finally {
-        if(user) setLoading(false);
+        setLoading(false);
     }
   };
 
@@ -93,6 +93,11 @@ const Seats = () => {
 
   const handleBookNow = async () => {
     if (selectedSeats.length === 0) return;
+
+    if (!user) {
+    navigate("/login", { state: { from: window.location.pathname } });
+    return;
+  }
 
     try {
       setBookingLoading(true);

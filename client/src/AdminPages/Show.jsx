@@ -184,22 +184,6 @@ const Show = () => {
               </div>
             </div>
 
-            {/* Price */}
-            <div>
-              <label className="block text-sm text-zinc-400 mb-2">
-                Base Ticket Price
-              </label>
-              <input
-                type="number"
-                name="price"
-                value={show.price}
-                onChange={handleChange}
-                placeholder="Enter price"
-                className="w-full p-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-indigo-500"
-                required
-              />
-            </div>
-
             <button
               type="submit"
               className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-semibold"

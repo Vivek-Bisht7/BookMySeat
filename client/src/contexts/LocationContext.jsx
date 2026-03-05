@@ -10,7 +10,6 @@ export const LocationProvider = ({ children }) => {
   const [locationLoading, setLocationLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
 
-  // Convert lat/lng to city
   const reverseGeocode = async (lat, lng) => {
     try {
       const response = await fetch(
@@ -32,10 +31,8 @@ export const LocationProvider = ({ children }) => {
     }
   };
 
-  // Fetch location when user logs in
   useEffect(() => {
-    if (!user) return;
-    if (userLocation) return; // prevent multiple prompts
+    if (userLocation) return; 
 
     if (!navigator.geolocation) {
       setLocationError("Geolocation not supported");
@@ -72,6 +69,7 @@ export const LocationProvider = ({ children }) => {
         userLocation,
         locationLoading,
         locationError,
+        setUserLocation,
       }}
     >
       {children}

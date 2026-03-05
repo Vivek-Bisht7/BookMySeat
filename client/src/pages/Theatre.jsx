@@ -25,12 +25,12 @@ const convertTo12Hour = (time24) => {
       minute: "2-digit",
       hour12: true,
     })
-    .toUpperCase(); 
+    .toUpperCase();
 };
 
 const Theatre = () => {
   const { id } = useParams();
-  
+
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [movie, setMovie] = useState(null);
@@ -39,50 +39,61 @@ const Theatre = () => {
   const [theatres, setTheatres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-   
 
-  const { userLocation, locationLoading, locationError } =
-    useContext(LocationContext);
+  const { userLocation, locationLoading } = useContext(LocationContext);
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      if (!userLocation) return;
+    const fetchData = async () => {
+      try {
+        if (!userLocation) return;
 
-      setLoading(true);
-      setError("");
+        setLoading(true);
+        setError("");
 
-      const [movieRes, showRes] = await Promise.all([
-        axios.get(`${API_URL}/movie/getMovie/${id}`),
-        axios.get(`${API_URL}/show/${id}?city=${userLocation}`),
-      ]);
-      const movieData = movieRes.data?.movie || movieRes.data;
-      setMovie(movieData);
+        const [movieRes, showRes] = await Promise.all([
+          axios.get(`${API_URL}/movie/getMovie/${id}`),
+          axios.get(`${API_URL}/show/${id}?city=${userLocation}`),
+        ]);
+        const movieData = movieRes.data?.movie || movieRes.data;
+        setMovie(movieData);
 
-      const showData = showRes.data || {};
+        const showData = showRes.data || {};
 
-      const uniqueDates = [
-        ...new Set(
-          (showData.dates || []).map((d) => d.split("T")[0])
-        ),
-      ];
+        const uniqueDates = [
+          ...new Set((showData.dates || []).map((d) => d.split("T")[0])),
+        ];
 
-      setDates(uniqueDates);
-      setSelectedDate(uniqueDates[0] || "");
-      setTheatres(showData.theatres || []);
+        setDates(uniqueDates);
+        setSelectedDate(uniqueDates[0] || "");
+        setTheatres(showData.theatres || []);
+      } catch (err) {
+        console.error("Error:", err.response?.data || err.message);
+        setError(err.response?.data.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    } catch (err) {
-      console.error("Error:", err.response?.data || err.message);
-      setError("Something went wrong while fetching data.");
-    } finally {
-      setLoading(false);
+    if (id && userLocation && !locationLoading) {
+      fetchData();
     }
-  };
+  }, [id, API_URL, userLocation, locationLoading]);
 
-  if (id && userLocation && !locationLoading) {
-    fetchData();
+  if (!userLocation && !locationLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
+        <div className="text-center">
+          <h2 className="text-white text-2xl font-semibold mb-3">
+            Select Your City
+          </h2>
+          <p className="text-gray-400">
+            Please select a city from the location dropdown in the navbar to
+            view theatres.
+          </p>
+        </div>
+      </div>
+    );
   }
-}, [id, API_URL, userLocation, locationLoading]);
 
   if (loading)
     return (
@@ -90,7 +101,8 @@ const Theatre = () => {
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
       </div>
     );
-  if (error) return <div className="text-red-500 m-6">{error}</div>;
+
+  if (error) return <div className="text-red-500 m-6 min-h-screen select-none">{error}</div>;
   if (!movie) return <div className="text-white m-6">Movie not found</div>;
 
   return (
@@ -122,7 +134,7 @@ const Theatre = () => {
         {theatres.map((theatre) => {
           const filteredShows =
             theatre.showtimes?.filter(
-              (show) => show.date.split("T")[0] === selectedDate
+              (show) => show.date.split("T")[0] === selectedDate,
             ) || [];
 
           if (filteredShows.length === 0) return null;

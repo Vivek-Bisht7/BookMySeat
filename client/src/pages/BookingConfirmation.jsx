@@ -9,7 +9,7 @@ import {
   ChevronLeft,
   CheckCircle2,
   Clock,
-} from "lucide-react"; // Optional: npm install lucide-react
+} from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Confirmation = () => {
@@ -17,23 +17,23 @@ const Confirmation = () => {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
   const [payLoading, setPayLoading] = useState(false);
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const fetchBooking = async () => {
     try {
-      if(!user) return;
+      if (!user) return;
       const res = await api.get(`/booking/${id}`);
       setBooking(res.data);
     } catch (err) {
       console.error(err);
     } finally {
-        if(user)setLoading(false);
+      if (user) setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchBooking();
-  }, [id,user]);
+  }, [id, user]);
 
   const handlePayment = async () => {
     try {
@@ -60,7 +60,7 @@ const Confirmation = () => {
             console.error("Verification failed", err);
           }
         },
-        theme: { color: "#ef4444" }, // Red theme for cinema
+        theme: { color: "#ef4444" },
       };
 
       const rzp = new window.Razorpay(options);
@@ -87,8 +87,7 @@ const Confirmation = () => {
   const isConfirmed = status === "CONFIRMED";
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-red-500/30">
-      {/* Background Poster Blur */}
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-red-500/30">\
       <div className="fixed inset-0 z-0">
         <img
           src={movie.poster}
@@ -107,7 +106,6 @@ const Confirmation = () => {
         </Link>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Left: Movie Poster (Visible on desktop) */}
           <div className="hidden lg:block lg:col-span-4">
             <div className="sticky top-12">
               <img

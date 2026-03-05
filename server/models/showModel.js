@@ -24,10 +24,6 @@ const showSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  price: {
-    type: Number,
-    required: true
-  },
   bookedSeats: {
     type: [String], 
     default: []
