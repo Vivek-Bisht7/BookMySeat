@@ -3,6 +3,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { LocationContext } from "../contexts/LocationContext";
 import { IoSearch } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -66,8 +67,8 @@ const Navbar = () => {
         <div className="flex items-center text-sm text-neutral-400 gap-2">
           {locationLoading && (
             <>
-              <span className="animate-pulse">⏳</span>
-              <span>Detecting...</span>
+              <LoaderCircle className="animate-spin  [animation-duration:0.5s]"/>
+              <span>Detecting Location</span>
             </>
           )}
 

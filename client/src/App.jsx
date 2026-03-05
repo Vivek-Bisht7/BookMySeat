@@ -10,6 +10,7 @@ import Footer from "../src/components/Footer";
 import Theatre from "./pages/Theatre";
 import Admin from "./pages/Admin";
 import { LocationProvider } from "./contexts/LocationContext";
+import BookingConfirmation from "./pages/BookingConfirmation";
 
 const App = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/movie/:id/Theatres" element={<Theatre />} />
             <Route path="/seats/:id" element={<Seats />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/confirmation/:id" element={<BookingConfirmation />} />
           </Routes>
           <Footer />
         </LocationProvider>

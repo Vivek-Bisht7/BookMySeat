@@ -26,9 +26,12 @@ const MovieDetails = () => {
     fetchMovie();
   }, [id]);
 
-  if (loading) {
-    return <div className="text-white p-6">Loading...</div>;
-  }
+  if (loading)
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
+      </div>
+    );
 
   if (!movie) {
     return (
