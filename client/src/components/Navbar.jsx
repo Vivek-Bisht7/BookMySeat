@@ -3,16 +3,15 @@ import { AuthContext } from "../contexts/AuthContext";
 import { LocationContext } from "../contexts/LocationContext";
 import { IoSearch } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LoaderCircle, MapPin } from "lucide-react";
 import CustomSelect from "../components/CustomSelect";
 
 const Navbar = () => {
   const { user, logout, loading } = useContext(AuthContext);
-  const { userLocation, setUserLocation, locationLoading, locationError } =
-    useContext(LocationContext);
+  const { setUserLocation, locationLoading } = useContext(LocationContext);
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("Select City");
   const menuRef = useRef(null);
 
   const navigate = useNavigate();
@@ -20,6 +19,12 @@ const Navbar = () => {
 
   const isAdminRoute = location.pathname.startsWith("/admin");
   const isLoginPage = location.pathname === "/login";
+
+  useEffect(() => {
+    if (locationLoading) {
+      setPlaceholder("Detecting...");
+    }
+  }, [locationLoading]);
 
   useEffect(() => {
     const savedCity = localStorage.getItem("userCity");
@@ -31,69 +36,54 @@ const Navbar = () => {
 
   const locationOptions = [
     {
-      value: "delhi",
       label: "Delhi",
     },
     {
-      value: "mumbai",
       label: "Mumbai",
     },
     {
-      value: "bangalore",
       label: "Bangalore",
     },
     {
-      value: "hyderabad",
       label: "Hyderabad",
     },
     {
-      value: "chennai",
       label: "Chennai",
     },
     {
-      value: "kolkata",
       label: "Kolkata",
     },
     {
-      value: "pune",
       label: "Pune",
     },
     {
-      value: "ahmedabad",
       label: "Ahmedabad",
     },
     {
-      value: "jaipur",
       label: "Jaipur",
     },
     {
-      value: "chandigarh",
       label: "Chandigarh",
     },
     {
-      value: "lucknow",
       label: "Lucknow",
     },
     {
-      value: "dehradun",
       label: "Dehradun",
     },
     {
-      value: "indore",
       label: "Indore",
     },
     {
-      value: "bhopal",
       label: "Bhopal",
     },
     {
-      value: "surat",
       label: "Surat",
     },
   ];
 
   const handleLocationChange = (option) => {
-    const city = option.label;
+    const city = option?.label;
 
     setUserLocation(city);
     localStorage.setItem("userCity", city);
@@ -130,6 +120,7 @@ const Navbar = () => {
       </div>
     );
   }
+
   return (
     <div className="bg-neutral-900 h-16 w-full flex items-center px-6 border-b border-neutral-800 select-none shadow-lg">
       {/* Logo */}
@@ -165,40 +156,13 @@ const Navbar = () => {
       )}
 
       {/* Location */}
-      {localStorage.getItem("userCity") && !isLoginPage && (
-          <div className="flex items-center gap-2 text-white px-4">
-              <MapPin className="text-red-500" />
-              <span>{localStorage.getItem("userCity")}</span>
-            </div>
-      )}
 
-      {!localStorage.getItem("userCity") && !isLoginPage && (
-        <div className="flex items-center text-sm text-neutral-400 gap-3 mx-4">
-          {locationLoading && (
-            <>
-              <LoaderCircle className="animate-spin text-blue-400" />
-              <span>Detecting Location...</span>
-            </>
-          )}
-          {userLocation && !locationLoading && !locationError && (
-            <div className="flex items-center gap-2 text-white px-4">
-              <MapPin className="text-red-500" />
-              <span>{userLocation}</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {!localStorage.getItem("userCity") && !isLoginPage && locationError && (
-        <div className="flex items-center gap-2 text-white px-4">
-          <MapPin className="text-red-500" />
-
-          <CustomSelect
-            options={locationOptions}
-            placeholder="Choose city"
-            onChange={handleLocationChange}
-          />
-        </div>
+      {!isLoginPage && (
+        <CustomSelect
+          options={locationOptions}
+          placeholder={placeholder}
+          onChange={handleLocationChange}
+        />
       )}
 
       {/* Right */}

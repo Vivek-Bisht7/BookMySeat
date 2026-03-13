@@ -11,6 +11,7 @@ import Theatre from "./pages/Theatre";
 import Admin from "./pages/Admin";
 import { LocationProvider } from "./contexts/LocationContext";
 import BookingConfirmation from "./pages/BookingConfirmation";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen w-full bg-neutral-950">
+      <Toaster position="top-center" />
       <AuthProvider>
         <LocationProvider>
           <Navbar />

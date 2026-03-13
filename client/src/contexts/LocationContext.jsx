@@ -31,8 +31,7 @@ export const LocationProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (userLocation) return; 
+  const detectLocation = ()=>{
 
     if (!navigator.geolocation) {
       setLocationError("Geolocation not supported");
@@ -50,6 +49,7 @@ export const LocationProvider = ({ children }) => {
 
         if (city) {
           setUserLocation(city);
+          localStorage.setItem("userCity", city);
         } else {
           setLocationError("Could not detect city");
         }
@@ -61,7 +61,8 @@ export const LocationProvider = ({ children }) => {
         setLocationLoading(false);
       }
     );
-  }, [user]);
+  }
+  
 
   return (
     <LocationContext.Provider
@@ -70,6 +71,7 @@ export const LocationProvider = ({ children }) => {
         locationLoading,
         locationError,
         setUserLocation,
+        detectLocation,
       }}
     >
       {children}

@@ -1,11 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import HeroCarousel from "../components/HeroCarousel";
 import NowShowing from "../components/NowShowing";
+import { LocationContext } from "../contexts/LocationContext";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const { user, loading } = useContext(AuthContext);
+  const {locationError} = useContext(LocationContext);
+
+  useEffect(() => {
+      if(!locationError) return;
+
+      toast.error(locationError)
+    }, [locationError])
 
   if (loading)
     return (
