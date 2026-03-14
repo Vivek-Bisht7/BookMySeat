@@ -18,12 +18,12 @@ const Home = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-zinc-950 p-6 animate-pulse">
-        <div className="w-full h-105 bg-zinc-800 rounded-xl mb-6"></div>
+      <div className="min-h-screen bg-zinc-950 p-2 animate-pulse">
+        <div className="w-full h-96 bg-zinc-800 rounded-xl mb-6"></div>
 
-        <div className="h-10 w-60 bg-zinc-800 rounded mb-6"></div>
+        <div className="h-10 w-65 ml-6 bg-zinc-800 rounded mb-6"></div>
 
-        <div className="flex gap-6 overflow-hidden">
+        <div className="flex gap-6 px-6 overflow-hidden">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="w-60 shrink-0">
               <div className="h-70 bg-zinc-800 rounded-lg mb-3"></div>

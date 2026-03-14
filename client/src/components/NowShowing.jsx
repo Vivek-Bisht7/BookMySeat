@@ -44,7 +44,16 @@ const NowShowing = () => {
         Recommended Movies
       </h2>
 
-      {loading && <p className="text-white">Loading movies...</p>}
+      {loading && <div className="flex gap-6 overflow-hidden">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="w-60 shrink-0">
+              <div className="h-70 bg-zinc-800 rounded-lg mb-3"></div>
+              <div className="h-4 bg-zinc-800 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-zinc-800 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>}
+
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && (

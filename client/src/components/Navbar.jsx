@@ -157,7 +157,7 @@ const Navbar = () => {
 
       {/* Location */}
 
-      {!isLoginPage && (
+      {!isLoginPage && !isAdminRoute && (
         <CustomSelect
           options={locationOptions}
           placeholder={placeholder}

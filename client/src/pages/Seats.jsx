@@ -125,7 +125,7 @@ const Seats = () => {
           Select Seats – {movie.title}
         </span>
         <Link
-          to={`/movie/${movie._id}`}
+          to={`/movie/${movie._id}/Theatres`}
           className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-xl transition"
         >
           Back

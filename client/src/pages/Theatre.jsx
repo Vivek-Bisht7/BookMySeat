@@ -102,13 +102,25 @@ const Theatre = () => {
       </div>
     );
 
-  if (error) return <div className="text-red-500 m-6 min-h-screen select-none">{error}</div>;
+  if (error)
+    return (
+      <div className="text-red-500 m-6 min-h-screen select-none">{error}</div>
+    );
   if (!movie) return <div className="text-white m-6">Movie not found</div>;
 
   return (
     <div className="m-6 select-none min-h-screen">
       {/* Movie Title */}
-      <h1 className="text-white font-semibold text-4xl mb-6">{movie.title}</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-white font-semibold text-4xl">{movie.title}</h1>
+
+        <Link
+          to={`/movie/${movie._id}`}
+          className="bg-neutral-800 text-neutral-300 px-5 py-2 rounded-md hover:bg-neutral-700 transition font-bold"
+        >
+          Back
+        </Link>
+      </div>
 
       {/* Date Selector */}
       {dates.length > 0 && (
