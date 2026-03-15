@@ -53,7 +53,7 @@ const CustomSelect = ({ options, placeholder, onChange }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-45 md:w-full bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl z-50 overflow-hidden">
+        <div className="absolute top-full left-0 mt-2 w-45 md:w-full bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl z-100 overflow-hidden">
           
           <button
             onClick={onDetectClick}

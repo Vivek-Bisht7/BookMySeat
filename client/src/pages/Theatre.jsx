@@ -38,7 +38,12 @@ const Theatre = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!userLocation || locationLoading) return;
+      if (locationLoading) return;
+
+      if (!userLocation) {
+        setLoading(false);
+        return;
+      }
 
       try {
         setLoading(true);
@@ -73,11 +78,13 @@ const Theatre = () => {
       </div>
     );
 
-  if (!userLocation)
+  if (userLocation == null)
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center text-center">
         <MapPin className="text-red-500 mb-4" size={40} />
-        <h2 className="text-xl font-semibold text-white">Select your location</h2>
+        <h2 className="text-xl font-semibold text-white">
+          Select your location
+        </h2>
         <p className="text-gray-400 text-sm">
           Choose a city to see theatres near you
         </p>
@@ -86,22 +93,16 @@ const Theatre = () => {
 
   return (
     <div className="min-h-screen bg-black text-white select-none">
-
-      <div className="bg-black border-b border-gray-800 sticky top-0 z-50 backdrop-blur">
+      <div className="bg-black border-b border-gray-800 sticky top-0 z-20 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
-
-          <Link
-            to={`/movie/${id}`}
-            className="p-2 bg-gray-900 rounded-full "
-          >
+          <Link to={`/movie/${id}`} className="p-2 bg-gray-900 rounded-full ">
             <ChevronLeft size={22} />
           </Link>
 
-            <h1 className="text-4xl font-semibold mb-4">{movie?.title}</h1>
+          <h1 className="text-4xl font-semibold mb-4">{movie?.title}</h1>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 pb-4 flex gap-3 overflow-x-auto">
-
           {dates.map((date) => {
             const { dayName, dayNum, month } = formatDateParts(date);
             const active = selectedDate === date;
@@ -127,15 +128,13 @@ const Theatre = () => {
       </div>
 
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
-
         {theatres.filter((t) =>
-          t.showtimes?.some((s) => s.date.split("T")[0] === selectedDate)
+          t.showtimes?.some((s) => s.date.split("T")[0] === selectedDate),
         ).length > 0 ? (
           theatres.map((theatre) => {
-
             const shows =
               theatre.showtimes?.filter(
-                (s) => s.date.split("T")[0] === selectedDate
+                (s) => s.date.split("T")[0] === selectedDate,
               ) || [];
 
             if (shows.length === 0) return null;
@@ -145,9 +144,7 @@ const Theatre = () => {
                 key={theatre._id}
                 className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:bg-gray-800 transition"
               >
-
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-
                   <div>
                     <h2 className="text-lg font-semibold">{theatre.name}</h2>
                     <p className="text-xs text-green-400 mt-1">
@@ -156,7 +153,6 @@ const Theatre = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-3">
-
                     {shows.map((show) => (
                       <Link
                         key={show._id}
@@ -166,20 +162,15 @@ const Theatre = () => {
                         {formatTime(show.time)}
                       </Link>
                     ))}
-
                   </div>
-
                 </div>
-
               </div>
             );
           })
         ) : (
           <div className="text-center py-16">
             <CalendarDays className="mx-auto text-gray-600 mb-3" size={40} />
-            <p className="text-gray-400">
-              No shows available for this date
-            </p>
+            <p className="text-gray-400">No shows available for this date</p>
           </div>
         )}
       </main>
