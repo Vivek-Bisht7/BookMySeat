@@ -26,7 +26,7 @@ const HeroCarousel = () => {
   if (loading) {
     return (
       <div className="w-full overflow-hidden animate-pulse p-2 select-none">
-        <div className="w-full h-96 bg-zinc-800 rounded-xl"></div>
+        <div className="w-full h-40 sm:h-64 md:h-80 lg:h-96 bg-zinc-800 rounded-xl"></div>
       </div>
     );
   }
@@ -34,7 +34,7 @@ const HeroCarousel = () => {
   if (!banners.length) return null;
 
   return (
-    <div className="w-full rounded-xl shadow-lg overflow-hidden select-none">
+    <div className="w-full px-2 md:px-4 lg:px-4 py-2 rounded-xl shadow-lg overflow-hidden select-none">
       <Carousel
         autoPlay
         infiniteLoop
@@ -52,7 +52,7 @@ const HeroCarousel = () => {
             <img
               src={banner.imageUrl}
               alt={`Banner ${idx + 1}`}
-              className="h-100 object-cover"
+              className="w-full h-40 sm:h-64 md:h-100 lg:h-110 object-cover rounded-xl"
             />
           </div>
         ))}
@@ -61,4 +61,4 @@ const HeroCarousel = () => {
   );
 };
 
-export default HeroCarousel;
+export default HeroCarousel; 

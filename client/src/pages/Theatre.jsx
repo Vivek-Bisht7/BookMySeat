@@ -2,35 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { LocationContext } from "../contexts/LocationContext";
+import { ChevronLeft, MapPin, CalendarDays } from "lucide-react";
 
-const formatDateWithDay = (isoDate) => {
-  const date = new Date(isoDate);
-  return date.toLocaleDateString("en-IN", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  });
-};
-
-const convertTo12Hour = (time24) => {
+const formatTime = (time24) => {
   if (!time24) return "";
-
   const [hours, minutes] = time24.split(":");
   const date = new Date();
   date.setHours(hours, minutes);
+  return date.toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
 
-  return date
-    .toLocaleTimeString("en-IN", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .toUpperCase();
+const formatDateParts = (isoDate) => {
+  const date = new Date(isoDate);
+  return {
+    dayName: date.toLocaleDateString("en-IN", { weekday: "short" }),
+    dayNum: date.getDate(),
+    month: date.toLocaleDateString("en-IN", { month: "short" }),
+  };
 };
 
 const Theatre = () => {
   const { id } = useParams();
-
+  const { userLocation, locationLoading } = useContext(LocationContext);
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [movie, setMovie] = useState(null);
@@ -38,149 +35,154 @@ const Theatre = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [theatres, setTheatres] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const { userLocation, locationLoading } = useContext(LocationContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        if (!userLocation) return;
+      if (!userLocation || locationLoading) return;
 
+      try {
         setLoading(true);
-        setError("");
 
         const [movieRes, showRes] = await Promise.all([
           axios.get(`${API_URL}/movie/getMovie/${id}`),
           axios.get(`${API_URL}/show/${id}?city=${userLocation}`),
         ]);
-        const movieData = movieRes.data?.movie || movieRes.data;
-        setMovie(movieData);
 
-        const showData = showRes.data || {};
-
-        const uniqueDates = [
-          ...new Set((showData.dates || []).map((d) => d.split("T")[0])),
+        const availableDates = [
+          ...new Set((showRes.data.dates || []).map((d) => d.split("T")[0])),
         ];
 
-        setDates(uniqueDates);
-        setSelectedDate(uniqueDates[0] || "");
-        setTheatres(showData.theatres || []);
+        setMovie(movieRes.data.movie || movieRes.data);
+        setDates(availableDates);
+        setSelectedDate(availableDates[0] || "");
+        setTheatres(showRes.data.theatres || []);
       } catch (err) {
-        console.error("Error:", err.response?.data || err.message);
-        setError(err.response?.data.message);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    if (id && userLocation && !locationLoading) {
-      fetchData();
-    }
-  }, [id, API_URL, userLocation, locationLoading]);
+    fetchData();
+  }, [id, userLocation, locationLoading]);
 
-  if (!userLocation && !locationLoading) {
+  if (loading || locationLoading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
-        <div className="text-center">
-          <h2 className="text-white text-2xl font-semibold mb-3">
-            Select Your City
-          </h2>
-          <p className="text-gray-400">
-            Please select a city from the location dropdown in the navbar to
-            view theatres.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (loading)
-    return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
 
-  if (error)
+  if (!userLocation)
     return (
-      <div className="text-red-500 m-6 min-h-screen select-none">{error}</div>
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center text-center">
+        <MapPin className="text-red-500 mb-4" size={40} />
+        <h2 className="text-xl font-semibold text-white">Select your location</h2>
+        <p className="text-gray-400 text-sm">
+          Choose a city to see theatres near you
+        </p>
+      </div>
     );
-  if (!movie) return <div className="text-white m-6">Movie not found</div>;
 
   return (
-    <div className="m-6 select-none min-h-screen">
-      {/* Movie Title */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-white font-semibold text-4xl">{movie.title}</h1>
+    <div className="min-h-screen bg-black text-white select-none">
 
-        <Link
-          to={`/movie/${movie._id}`}
-          className="bg-neutral-800 text-neutral-300 px-5 py-2 rounded-md hover:bg-neutral-700 transition font-bold"
-        >
-          Back
-        </Link>
+      <div className="bg-black border-b border-gray-800 sticky top-0 z-50 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+
+          <Link
+            to={`/movie/${id}`}
+            className="p-2 bg-gray-900 rounded-full "
+          >
+            <ChevronLeft size={22} />
+          </Link>
+
+            <h1 className="text-4xl font-semibold mb-4">{movie?.title}</h1>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 pb-4 flex gap-3 overflow-x-auto">
+
+          {dates.map((date) => {
+            const { dayName, dayNum, month } = formatDateParts(date);
+            const active = selectedDate === date;
+
+            return (
+              <button
+                key={date}
+                onClick={() => setSelectedDate(date)}
+                className={`flex flex-col items-center px-4 py-2 rounded-lg border text-sm transition
+                ${
+                  active
+                    ? "bg-red-500 text-white border-red-500"
+                    : "bg-gray-900 border-gray-800 hover:border-red-500"
+                }`}
+              >
+                <span className="text-xs">{dayName}</span>
+                <span className="font-semibold">{dayNum}</span>
+                <span className="text-xs">{month}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Date Selector */}
-      {dates.length > 0 && (
-        <div className="flex gap-4 mb-8 p-4 border-t border-b border-gray-600">
-          {dates.map((date) => (
-            <button
-              key={date}
-              onClick={() => setSelectedDate(date)}
-              className={`px-4 py-2 text-white rounded-lg transition ${
-                selectedDate === date
-                  ? "bg-red-700"
-                  : "bg-zinc-800 hover:bg-zinc-700"
-              }`}
-            >
-              {formatDateWithDay(date)}
-            </button>
-          ))}
-        </div>
-      )}
+      <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
 
-      {/* Theatre List */}
-      <div className="space-y-4">
-        {theatres.map((theatre) => {
-          const filteredShows =
-            theatre.showtimes?.filter(
-              (show) => show.date.split("T")[0] === selectedDate,
-            ) || [];
+        {theatres.filter((t) =>
+          t.showtimes?.some((s) => s.date.split("T")[0] === selectedDate)
+        ).length > 0 ? (
+          theatres.map((theatre) => {
 
-          if (filteredShows.length === 0) return null;
+            const shows =
+              theatre.showtimes?.filter(
+                (s) => s.date.split("T")[0] === selectedDate
+              ) || [];
 
-          return (
-            <div
-              key={theatre._id}
-              className="bg-zinc-800 flex justify-between items-center rounded-lg"
-            >
-              <h2 className="text-white font-semibold text-2xl p-5">
-                {theatre.name}
-              </h2>
+            if (shows.length === 0) return null;
 
-              <div className="flex flex-wrap items-center p-4 gap-6 text-gray-300">
-                {filteredShows.map((show) => (
-                  <Link
-                    key={show._id}
-                    to={`/seats/${show._id}`}
-                    className="border border-l-4 border-green-500 p-3 hover:bg-zinc-700 transition"
-                  >
-                    {convertTo12Hour(show.time)}
-                  </Link>
-                ))}
+            return (
+              <div
+                key={theatre._id}
+                className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:bg-gray-800 transition"
+              >
+
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+                  <div>
+                    <h2 className="text-lg font-semibold">{theatre.name}</h2>
+                    <p className="text-xs text-green-400 mt-1">
+                      M-Ticket Available
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+
+                    {shows.map((show) => (
+                      <Link
+                        key={show._id}
+                        to={`/seats/${show._id}`}
+                        className="px-4 py-2 border border-green-500 text-green-400 text-sm font-medium hover:bg-green-500 hover:text-black transition border-l-4 placeholder-green-500"
+                      >
+                        {formatTime(show.time)}
+                      </Link>
+                    ))}
+
+                  </div>
+
+                </div>
+
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {theatres.length === 0 && (
-        <div className="text-gray-400 mt-6">
-          No shows available for this movie.
-        </div>
-      )}
+            );
+          })
+        ) : (
+          <div className="text-center py-16">
+            <CalendarDays className="mx-auto text-gray-600 mb-3" size={40} />
+            <p className="text-gray-400">
+              No shows available for this date
+            </p>
+          </div>
+        )}
+      </main>
     </div>
   );
 };

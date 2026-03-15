@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../services/api";
-import {
-  Ticket,
-  Calendar,
-  MapPin,
-  CreditCard,
-  ChevronLeft,
-  CheckCircle2,
-  Clock,
-} from "lucide-react";
+import {Ticket,Calendar,MapPin,CreditCard,ChevronLeft,CheckCircle2,Clock,} from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Confirmation = () => {
@@ -87,8 +79,8 @@ const Confirmation = () => {
   const isConfirmed = status === "CONFIRMED";
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-red-500/30">\
-      <div className="fixed inset-0 z-0">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-red-500/30 select-none">
+      <div className="fixed  z-0">
         <img
           src={movie.poster}
           alt=""
@@ -116,10 +108,9 @@ const Confirmation = () => {
             </div>
           </div>
 
-          {/* Right: The Ticket */}
           <div className="lg:col-span-8">
             <div className="bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-              {/* Status Banner */}
+             
               <div
                 className={`p-4 text-center text-sm font-bold tracking-widest uppercase ${isConfirmed ? "bg-green-500/10 text-green-500" : "bg-yellow-500/10 text-yellow-500"}`}
               >
@@ -223,7 +214,6 @@ const Confirmation = () => {
                   </div>
                 </div>
 
-                {/* Footer Actions */}
                 <div className="pt-8 flex flex-col sm:flex-row gap-4">
                   {!isConfirmed && (
                     <button

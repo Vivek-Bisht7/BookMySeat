@@ -6,79 +6,98 @@ const NowShowing = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [movieCount, setMovieCount] = useState(null);
-
-  const [showMoreStatus, setShowMoreStatus] = useState(false);
-  const headerRef = useRef(null);
+  const [movieCount, setMovieCount] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const loadContent = async () => {
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/movie/getAllMovie`,
-        );
-        setMovies(res.data.movies);
-        setMovieCount(res.data.count);
-        setLoading(false);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/movie/getAllMovie`);
+        setMovies(data.movies || []);
+        setMovieCount(data.count || 0);
       } catch (err) {
-        console.error(err);
-        setError("Failed to load movies");
+        setError("We couldn't load the movies right now.");
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchMovies();
+    loadContent();
   }, []);
 
-  useEffect(() => {
-    if (showMoreStatus) {
-      headerRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [showMoreStatus]);
+  const desktopMovies = isExpanded ? movies : movies.slice(0, 5);
 
-  const limitedMovies = movies.slice(0, 5);
-
-  return (
-    <div className="mt-8 px-6 mb-4 select-none w-full">
-      <h2 className="text-2xl text-white font-bold mb-6" ref={headerRef}>
-        Recommended Movies
-      </h2>
-
-      {loading && <div className="flex gap-6 overflow-hidden">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="w-60 shrink-0">
-              <div className="h-70 bg-zinc-800 rounded-lg mb-3"></div>
-              <div className="h-4 bg-zinc-800 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-zinc-800 rounded w-1/2"></div>
+  if (loading) {
+    return (
+      <section className="mt-12 px-4 md:px-10 mb-12 w-full max-w-7xl mx-auto">
+        <div className="h-8 w-48 bg-neutral-800 rounded-md mb-8 animate-pulse" />
+        <div className="flex gap-4 md:grid md:grid-cols-5 md:gap-6 overflow-hidden">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="w-44 md:w-full shrink-0">
+              <div className="aspect-2/3 bg-neutral-800 rounded-2xl mb-4 animate-pulse" />
+              <div className="h-4 bg-neutral-800 rounded w-3/4 mb-2 animate-pulse" />
             </div>
           ))}
-        </div>}
+        </div>
+      </section>
+    );
+  }
 
-      {error && <p className="text-red-500">{error}</p>}
+  if (error) {
+    return (
+      <div className="py-20 text-center">
+        <p className="text-neutral-400 mb-6">{error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 bg-neutral-800 text-white rounded-full hover:bg-neutral-700 transition"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
-      {!loading && !error && (
-        <>
-          <div className="grid grid-cols-5 gap-6">
-            {(showMoreStatus ? movies : limitedMovies).map((movie) => (
-              <MovieCard key={movie._id} movie={movie} />
-            ))}
-          </div>
-          {movieCount > 5 && (
-            <div className="w-full flex justify-center">
-              <button
-                className="flex justify-center m-6 px-6 py-2 cursor-pointer 
-                 rounded-xl text-indigo-400 border border-indigo-400 
-                 hover:bg-indigo-600 hover:text-white transition"
-                onClick={() => setShowMoreStatus(!showMoreStatus)}
-              >
-                {showMoreStatus ? "Show Less" : "Show More"}
-              </button>
+  return (
+    <section className="mt-12 px-4 md:px-10 mb-12 w-full max-w-7xl mx-auto" ref={sectionRef}>
+      <div className="flex justify-between items-end mb-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl text-white font-extrabold tracking-tight">
+            Now Showing
+          </h2>
+          <p className="text-neutral-500 text-sm md:text-base mt-1">
+            The latest releases currently in theaters
+          </p>
+        </div>
+
+        {movieCount > 5 && (
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="hidden md:block text-red-500 text-sm font-bold hover:text-red-400 transition-colors"
+          >
+            {isExpanded ? "Show Less" : "View All"}
+          </button>
+        )}
+      </div>
+
+      <div className="relative">
+        <div className="flex md:hidden overflow-x-auto gap-4 pb-6 snap-x snap-mandatory scrollbar-hide">
+          {movies.map((movie) => (
+            <div key={movie._id} className="w-48 shrink-0 snap-start">
+              <MovieCard movie={movie} />
             </div>
-          )}
-          )
-        </>
-      )}
-    </div>
+          ))}
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-8">
+          {desktopMovies.map((movie) => (
+            <div key={movie._id} className="transition-transform duration-300 hover:scale-[1.02]">
+              <MovieCard movie={movie} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
